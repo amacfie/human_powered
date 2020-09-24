@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #container {
+        margin: 0px auto;
+        width: 500px;
+        height: 375px;
+        border: 10px #333 solid;
+      }
+      #videoElement {
+        width: 500px;
+        height: 375px;
+        background-color: #666;
+      }
+    </style>
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+  </head>
+  <body>
+    <h2>Chrome is low on energy!</h2>
+    <!--
+    <div id="container">
+      <video autoplay="true" id="videoElement"> </video>
+    </div>
+    -->
+    <p>Pose Status: <span id="poseStatus"></span></p>
+
+    <p id='status'>Loading...</p>
+    <script src="main.js"></script>
+  </body>
+</html>
