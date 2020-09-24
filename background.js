@@ -7,11 +7,11 @@
 const MODULUS = 5;
 
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.local.set({color: '#3aa757'}, function() {
-    console.log('The color is green.');
-  });
   chrome.storage.local.set({counter: 0});
   chrome.storage.local.set({savedPoses: []});
+
+  // https://en.wikipedia.org/wiki/Solarized_(color_scheme)#Colors
+  chrome.browserAction.setBadgeBackgroundColor({color: '#b58900'});
 
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
@@ -32,13 +32,13 @@ chrome.tabs.onCreated.addListener(function (tab) {
       chrome.storage.local.set({counter: newCounter});
       if (newCounter === 0) {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-          chrome.browserAction.setIcon({path: "images/128x128.png"});
+          chrome.browserAction.setBadgeText({text: ''});
           var activeTab = tabs[0];
           chrome.storage.local.set({tabId: activeTab.id});
           chrome.tabs.create({url: chrome.extension.getURL('main.html')});
         });
       } else if (newCounter === MODULUS-1) {
-          chrome.browserAction.setIcon({path: "images/filled128x128.png"});
+        chrome.browserAction.setBadgeText({text: 'next'});
       }
     });
   }
