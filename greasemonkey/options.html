@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #container {
+        margin: 0px auto;
+        width: 500px;
+        height: 375px;
+        border: 10px #333 solid;
+      }
+      #videoElement {
+        width: 500px;
+        height: 375px;
+        background-color: #666;
+      }
+    </style>
+    <script src="https://unpkg.com/ml5@0.4.3/dist/ml5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+  </head>
+  <body>
+    <button id="log">save pose</button>
+    <p id='status'>Loading...</p>
+
+    <div id="sketch-holder">
+      <!-- Our sketch will go here! -->
+    </div>
+
+    <!--
+    <div>
+      <button id="sleep">Disable for 12 hours</button>
+    </div>
+    -->
+
+    <h3>Saved poses (click to delete)</h3>
+    <div id='savedPoses'></div>
+  </body>
+  <script src="options.js"></script>
+</html>
+

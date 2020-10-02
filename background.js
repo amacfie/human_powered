@@ -24,6 +24,7 @@ chrome.runtime.onInstalled.addListener(function() {
 });
 
 chrome.tabs.onCreated.addListener(function (tab) {
+  // only triggers if the user is opening a blank new tab
   if ('pendingUrl' in tab && tab.pendingUrl === 'chrome://newtab/') {
     console.log('new tab page opened');
     chrome.storage.local.get(['counter'], function(result) {
