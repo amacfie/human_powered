@@ -7,7 +7,7 @@
 // @noframes
 // ==/UserScript==
 
-const MODULUS = 10;
+const MODULUS = 2;
 
 function docReady(fn) {
   // see if DOM is already available
@@ -21,14 +21,13 @@ function docReady(fn) {
   }
 }
 
-if (typeof GM_getValue('disableUntil') === 'undefined') {
-  GM_setValue('disableUntil', 0);
-}
+//if (typeof GM_getValue('disableUntil') === 'undefined') {
+//  GM_setValue('disableUntil', 0);
+//}
 
 //if (window.location.href === 'http://localhost:6771/options.html') {
 //  docReady(function () {
 //    document.getElementById('sleep').onclick = function () {
-//      //setValue
 //      setTimeout(function () {GM_setValue(
 //        "disableUntil",
 //        new Date().getTime() / 1000 + 12 * 60 * 60
@@ -39,11 +38,11 @@ if (typeof GM_getValue('disableUntil') === 'undefined') {
 
 
 var shouldRun = (9 <= new Date().getHours() <= 19 &&
-  new Date().getTime() / 1000 >= GM_getValue('disableUntil') &&
+  //new Date().getTime() / 1000 >= GM_getValue('disableUntil') &&
   // navigating within domain
-  document.referrer.split('/')[2] === window.location.href.split('/')[2] &&
   !document.hidden &&
-  window.origin !== 'http://localhost:6771'
+  window.origin !== 'http://localhost:6771' &&
+  true // quick enable/disable
 );
 
 if (shouldRun) {
@@ -67,20 +66,19 @@ if (shouldRun) {
     color: #fff; /* White text color */
     text-align: center; /* Centered text */
     border-radius: 2px; /* Rounded borders */
+    border-style: none;
     padding: 16px; /* Padding */
     position: fixed; /* Sit on top of the screen */
     z-index: 1; /* Add a z-index if needed */
     left: 90%; /* Center the snackbar */
     bottom: 30px; /* 30px from the bottom */
   }
-
+  
   /* Show the snackbar when clicking on a button (class added with JavaScript) */
   #human_powered_snackbar.show {
-    visibility: visible; /* Show the snackbar */
-    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-    However, delay the fade out process for 2.5 seconds */
-    -webkit-animation: human_powered_fadein 0.5s, human_powered_fadeout 0.5s 2.5s;
-    animation: human_powered_fadein 0.5s, human_powered_fadeout 0.5s 2.5s;
+    visibility: visible;
+    /*animation: human_powered_fadein 0.5s, human_powered_fadeout 0.5s 2.5s;*/
+    animation: human_powered_fadein 0.5s
   }
 
   /* Animations to fade the snackbar in and out */
@@ -96,26 +94,28 @@ if (shouldRun) {
       `;
       document.getElementsByTagName('head')[0].appendChild(element);
 
-      var elemDiv = document.createElement('div');
+      var elemDiv = document.createElement('button');
       elemDiv.id = "human_powered_snackbar";
-      elemDiv.textContent = "⚡"
+      elemDiv.innerHTML = '⚡';
       document.body.appendChild(elemDiv);
       elemDiv.className = "show";
-      setTimeout(function(){
+      var remove = function(){
         elemDiv.className = elemDiv.className.replace("show", "");
-      }, 3000);
+      };
+      elemDiv.onclick = remove;
+      //setTimeout(remove, 2000);
     });
   }
 
-  if (newCount === MODULUS) {
-    GM_setValue('count', 0);
-  }
-  else {
-    GM_setValue('count', newCount);
-  }
+  GM_setValue('count', newCount % MODULUS);
 
   if (newCount === MODULUS) {
-    GM_openInTab('http://localhost:6771');
+    // don't trigger unless they've just been warned
+    if (document.referrer.split('/')[2] === window.location.href.split('/')[2]) {
+      GM_openInTab('http://localhost:6771');
+    } else {
+      GM_setValue('count', MODULUS-1);
+    }
   }
 }
 
