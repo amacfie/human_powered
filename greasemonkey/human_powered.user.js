@@ -7,7 +7,7 @@
 // @noframes
 // ==/UserScript==
 
-const MODULUS = 2;
+const MODULUS = 10;
 
 function docReady(fn) {
   // see if DOM is already available
@@ -51,12 +51,12 @@ if (shouldRun) {
   }
 
   var newCount = parseInt(GM_getValue('count')) + 1;
+  GM_setValue('count', newCount % MODULUS);
 
-  if (newCount === MODULUS - 1) {
-    docReady(function () {
-      var element = document.createElement('style');
-      element.setAttribute('type', 'text/css');
-      element.textContent = `
+  docReady(function () {
+    var element = document.createElement('style');
+    element.setAttribute('type', 'text/css');
+    element.textContent = `
   /* The snackbar - position it at the bottom and in the middle of the screen */
   #human_powered_snackbar {
     visibility: hidden; /* Hidden by default. Visible on click */
@@ -91,23 +91,30 @@ if (shouldRun) {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
   }
-      `;
-      document.getElementsByTagName('head')[0].appendChild(element);
+    `;
+    document.getElementsByTagName('head')[0].appendChild(element);
 
-      var elemDiv = document.createElement('button');
-      elemDiv.id = "human_powered_snackbar";
-      elemDiv.innerHTML = '⚡';
-      document.body.appendChild(elemDiv);
-      elemDiv.className = "show";
-      var remove = function(){
-        elemDiv.className = elemDiv.className.replace("show", "");
-      };
-      elemDiv.onclick = remove;
-      //setTimeout(remove, 2000);
-    });
-  }
+    var elemDiv = document.createElement('button');
+    elemDiv.id = "human_powered_snackbar";
+    elemDiv.innerHTML = '⚡';
+    document.body.appendChild(elemDiv);
 
-  GM_setValue('count', newCount % MODULUS);
+    var remove = function(){
+      elemDiv.className = elemDiv.className = '';
+    };
+    elemDiv.onclick = remove;
+    //setTimeout(remove, 2000);
+
+    var checkNext = function () {
+      if (parseInt(GM_getValue('count')) === MODULUS - 1) {
+        elemDiv.className = "show";
+      } else {
+        remove();
+      }
+      setTimeout(checkNext, 1000);
+    };
+    checkNext();
+  });
 
   if (newCount === MODULUS) {
     // don't trigger unless they've just been warned
