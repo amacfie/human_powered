@@ -73,7 +73,7 @@ if (shouldRun) {
     left: 90%; /* Center the snackbar */
     bottom: 30px; /* 30px from the bottom */
   }
-  
+
   /* Show the snackbar when clicking on a button (class added with JavaScript) */
   #human_powered_snackbar.show {
     visibility: visible;
@@ -102,13 +102,14 @@ if (shouldRun) {
     var remove = function(){
       elemDiv.className = elemDiv.className = '';
     };
-    elemDiv.onclick = remove;
+    elemDiv.onclick = function() {elemDiv.style.display = 'none';};
     //setTimeout(remove, 2000);
 
     var checkNext = function () {
       if (parseInt(GM_getValue('count')) === MODULUS - 1) {
         elemDiv.className = "show";
       } else {
+        elemDiv.style.display = 'inline-block';
         remove();
       }
       setTimeout(checkNext, 1000);
