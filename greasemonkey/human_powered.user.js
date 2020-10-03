@@ -37,7 +37,7 @@ function docReady(fn) {
 //}
 
 
-var shouldRun = (9 <= new Date().getHours() <= 19 &&
+var shouldRun = (9 <= new Date().getHours() && new Date().getHours() <= 19 &&
   //new Date().getTime() / 1000 >= GM_getValue('disableUntil') &&
   // navigating within domain
   !document.hidden &&
