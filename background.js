@@ -1,7 +1,3 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 'use strict';
 
 const MODULUS = 5;
@@ -12,15 +8,6 @@ chrome.runtime.onInstalled.addListener(function() {
 
   // https://en.wikipedia.org/wiki/Solarized_(color_scheme)#Colors
   chrome.browserAction.setBadgeBackgroundColor({color: '#b58900'});
-
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {hostEquals: 'developer.chrome.com'},
-      })],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
-  });
 });
 
 chrome.tabs.onCreated.addListener(function (tab) {

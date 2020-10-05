@@ -2,7 +2,7 @@
 // @name Human Powered
 // @namespace https://github.com/amacfie/human_powered
 // @description Improve posture, etc.
-// @include *
+// @include http*
 // @run-at document-start
 // @noframes
 // ==/UserScript==
@@ -36,13 +36,11 @@ function docReady(fn) {
 //  });
 //}
 
-
-var shouldRun = (9 <= new Date().getHours() && new Date().getHours() <= 19 &&
+var shouldRun = (9 <= new Date().getHours() && new Date().getHours() <= 17 &&
   //new Date().getTime() / 1000 >= GM_getValue('disableUntil') &&
-  // navigating within domain
-  !document.hidden &&
+  document.hasFocus() &&
   window.origin !== 'http://localhost:6771' &&
-  true // quick enable/disable
+  true  // quick enable/disable
 );
 
 if (shouldRun) {
