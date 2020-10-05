@@ -1,6 +1,7 @@
 Qutebrowser doesn't have proper behavior:
 
 * https://github.com/qutebrowser/qutebrowser/issues/3238#issuecomment-702810835
+  * getting/setting values is not cross-origin
 * https://github.com/qutebrowser/qutebrowser/issues/5665
 * https://github.com/qutebrowser/qutebrowser/issues/5763
 
