@@ -4,7 +4,8 @@
   "description": "Do exercises to keep using Chrome",
   "permissions": [
     "storage",
-    "tabs"
+    "tabs",
+    "declarativeContent"
   ],
   "options_page": "options.html",
   "background": {
