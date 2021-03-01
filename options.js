@@ -69,6 +69,56 @@ chrome.storage.local.get('savedPoses', function(data) {
   });
 });
 
+var savePeriod = function () {
+  var periodBox = document.getElementById('period');
+  var val = parseInt(periodBox.value);
+  if (val > 0) {
+    chrome.storage.local.set({period: val});
+  }
+};
+
+var saveStartTime = function () {
+  var startTimeBox = document.getElementById('startTime');
+  var val = startTimeBox.value.split(':');
+  if (val.length !== 2) return;
+  var h = parseInt(val[0]);
+  var m = parseInt(val[1]);
+  if (0 <= h < 24 && 0 <= m < 60) {
+    chrome.storage.local.set({startTime: h * 60 + m});
+  }
+};
+
+var saveEndTime = function () {
+  var endTimeBox = document.getElementById('endTime');
+  var val = endTimeBox.value.split(':');
+  if (val.length !== 2) return;
+  var h = parseInt(val[0]);
+  var m = parseInt(val[1]);
+  if (0 <= h < 24 && 0 <= m < 60) {
+    chrome.storage.local.set({endTime: h * 60 + m});
+  }
+};
+
+chrome.storage.local.get(
+  ['period', 'startTime', 'endTime'],
+  function(result) {
+    var periodBox = document.getElementById('period');
+    periodBox.value = result.period;
+    periodBox.oninput = savePeriod;
+
+    var startTimeBox = document.getElementById('startTime');
+    var h = floor(result.startTime / 60);
+    var m = (result.startTime % 60).toString().padStart(2, '0');
+    startTimeBox.value = h + ':' + m;
+    startTimeBox.oninput = saveStartTime;
+
+    var endTimeBox = document.getElementById('endTime');
+    var h = floor(result.endTime / 60);
+    var m = (result.endTime % 60).toString().padStart(2, '0');
+    endTimeBox.value = h + ':' + m;
+    endTimeBox.oninput = saveEndTime;
+});
+
 // https://p5js.org/reference/#/p5/setup
 function setup() {
   // https://p5js.org/reference/#/p5/createCanvas
@@ -82,8 +132,8 @@ function setup() {
   poseNet = ml5.poseNet(video, modelReady);
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
-  poseNet.on("pose", function(results) {
-    poses = results;
+  poseNet.on("pose", function(result) {
+    poses = result;
   });
   // Hide the video element, and just show the canvas
   video.hide();

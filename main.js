@@ -40,8 +40,8 @@ function setup() {
   poseNet = ml5.poseNet(video, modelReady);
   // This sets up an event that fills the global variable "poses"
   // with an array every time new poses are detected
-  poseNet.on("pose", function(results) {
-    poses = results;
+  poseNet.on("pose", function(result) {
+    poses = result;
   });
   // Hide the video element, and just show the canvas
   video.hide();
