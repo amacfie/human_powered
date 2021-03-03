@@ -1,5 +1,6 @@
 document.getElementById('reenable').onclick = function () {
   chrome.storage.local.set({disableUntil: 0});
+  window.close();
 };
 
 document.getElementById('disable').onclick = function () {
@@ -8,6 +9,7 @@ document.getElementById('disable').onclick = function () {
     chrome.storage.local.set({
       disableUntil: Date.now() / 1000 + hrs * 60 * 60
     });
+    window.close();
   }
 };
 

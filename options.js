@@ -73,6 +73,8 @@ var savePeriod = function () {
   var periodBox = document.getElementById('period');
   var val = parseInt(periodBox.value);
   if (val > 0) {
+    // if multiple calls to this function are made in quick succession, is it
+    // possible that setting the value will happen out or order?
     chrome.storage.local.set({period: val});
   }
 };
