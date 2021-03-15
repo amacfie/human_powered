@@ -1,4 +1,4 @@
-const TIMERSECS = 5;
+const TIMERSECS = 3;
 
 let video;
 let poseNet;
@@ -6,9 +6,9 @@ let poses = [];
 let chosenPose;
 
 function blobToDataURL(blob, callback) {
-    var a = new FileReader();
-    a.onload = function(e) {callback(e.target.result);}
-    a.readAsDataURL(blob);
+  var a = new FileReader();
+  a.onload = function(e) {callback(e.target.result);}
+  a.readAsDataURL(blob);
 }
 
 var logButton = document.getElementById('log');
@@ -17,7 +17,6 @@ logButton.onclick = function() {
   logButton.disabled = true;
   logButton.textContent = TIMERSECS;
   var tick = function () {
-    console.log('tick');
     var curVal = parseInt(logButton.textContent);
     if (curVal === 1) {
       savePose();
@@ -39,7 +38,6 @@ var savePose = function () {
           posesEl: poses[0],
           imgURL: url
         });
-        console.log(data.savedPoses);
         chrome.storage.local.set({savedPoses: data.savedPoses}, function () {
           window.location.reload(false);
         });
@@ -63,8 +61,9 @@ chrome.storage.local.get('savedPoses', function(data) {
   data.savedPoses.forEach(function (savedPose) {
     var img = document.createElement("img");
     img.src = savedPose.imgURL;
-    var src = document.getElementById("savedPoses");
     img.addEventListener("click", function(){deletePose(img.src);});
+    img.height = 480;
+    var src = document.getElementById("savedPoses");
     src.appendChild(img);
   });
 });
@@ -143,6 +142,7 @@ function setup() {
 
 function modelReady() {
   select("#status").hide();
+  document.getElementById('log').disabled = false;
 }
 
 // https://p5js.org/reference/#/p5/draw

@@ -13,8 +13,12 @@ var randomElement = function (arr) {
 
 chrome.storage.local.get('savedPoses', function(data) {
   if (data.savedPoses.length === 0) {
-    alert('save some poses: see options');
-  } else{
+    if (confirm('You have no saved poses. Go to Options?')) {
+      chrome.tabs.update({ url: chrome.extension.getURL('options.html') });
+    } else {
+      end();
+    }
+  } else {
     challengePose = randomElement(data.savedPoses).posesEl;
   }
 });
@@ -22,7 +26,7 @@ chrome.storage.local.get('savedPoses', function(data) {
 
 var end = function(element) {
   chrome.storage.local.get(['tabId'], function(result) {
-    chrome.tabs.update(result.tabId, {selected: true});
+    chrome.tabs.update(result.tabId, {highlighted: true});
     close();
   });
 };
@@ -49,6 +53,17 @@ function setup() {
 
 function modelReady() {
   select("#status").hide();
+}
+
+old_console = console.log;
+console.log = function (msg) {
+  m = msg;
+  if (msg.toString().includes('Could not start video source')) {
+    alert('Webcam not available');
+    end();
+  } else {
+    old_console(msg);
+  }
 }
 
 // https://p5js.org/reference/#/p5/draw
@@ -87,8 +102,8 @@ var poseStarted = -1;
 var checkPose = function () {
   if (poses.length > 0 && challengePose) {
     var curDist = poseDist(poses[0].pose, challengePose.pose);
-    poseStatus.textContent = curDist;
     if (curDist >= 0 && curDist <= MAXDIST) {
+      poseStatus.innerHTML = '&#10003; ' + curDist.toFixed(2);
       if (inPose) {
         if (Date.now() - poseStarted >= COUNTDOWN) {
           end();
@@ -98,6 +113,7 @@ var checkPose = function () {
         poseStarted = Date.now();
       }
     } else {
+      poseStatus.innerHTML = '&#10060; ' + curDist.toFixed(2);
       inPose = false;
     }
   }
