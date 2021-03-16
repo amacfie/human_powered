@@ -57,7 +57,6 @@ function modelReady() {
 
 old_console = console.log;
 console.log = function (msg) {
-  m = msg;
   if (msg.toString().includes('Could not start video source')) {
     alert('Webcam not available');
     end();

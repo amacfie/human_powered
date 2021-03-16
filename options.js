@@ -5,6 +5,15 @@ let poseNet;
 let poses = [];
 let chosenPose;
 
+old_console = console.log;
+console.log = function (msg) {
+  if (msg.toString().includes('Could not start video source')) {
+    alert('Webcam not available');
+  } else {
+    old_console(msg);
+  }
+}
+
 function blobToDataURL(blob, callback) {
   var a = new FileReader();
   a.onload = function(e) {callback(e.target.result);}
