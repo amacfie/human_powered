@@ -5,9 +5,9 @@
 
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/amacfie/human_powered/)
 
-Install: Download
-<https://github.com/amacfie/human_powered/archive/master.zip>
-then unpack and follow instructions
+[![Install on Chrome](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/iNEddTyWiMfLSwFD6qGq.png)](https://chrome.google.com/webstore/detail/human-powered/mcmbcciimnlkoimegemjfnhmambjccmm)
+
+Dev install: Clone then follow instructions
 [here](https://webkul.com/blog/how-to-install-the-unpacked-extension-in-chrome/)
 
 icon from <https://freeiconshop.com/icon/lightning-bolt-icon-outline/>
