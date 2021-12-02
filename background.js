@@ -1,17 +1,19 @@
 'use strict';
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.local.set({
-    counter: 0,
-    savedPoses: [],
-    period: 5,
-    startTime: 0,
-    endTime: (24-1)*60 + (60-1),
-    disableUntil: 0
-  });
+chrome.runtime.onInstalled.addListener(function (details) {
+  if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
+    chrome.storage.local.set({
+      counter: 0,
+      savedPoses: [],
+      period: 5,
+      startTime: 0,
+      endTime: (24-1)*60 + (60-1),
+      disableUntil: 0
+    });
 
-  // https://en.wikipedia.org/wiki/Solarized_(color_scheme)#Colors
-  chrome.browserAction.setBadgeBackgroundColor({color: '#b58900'});
+    // https://en.wikipedia.org/wiki/Solarized_(color_scheme)#Colors
+    chrome.browserAction.setBadgeBackgroundColor({color: '#b58900'});
+  }
 });
 
 chrome.tabs.onCreated.addListener(function (tab) {
