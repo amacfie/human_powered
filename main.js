@@ -14,7 +14,7 @@ var randomElement = function (arr) {
 chrome.storage.local.get('savedPoses', function(data) {
   if (data.savedPoses.length === 0) {
     if (confirm('You have no saved poses. Go to Options?')) {
-      chrome.tabs.update({ url: chrome.extension.getURL('options.html') });
+      chrome.tabs.update({ url: chrome.runtime.getURL('options.html') });
     } else {
       end();
     }

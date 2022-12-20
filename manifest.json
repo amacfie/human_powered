@@ -1,6 +1,6 @@
 {
   "name": "Human Powered",
-  "version": "0.2",
+  "version": "0.3",
   "description": "Do exercises to keep using Chrome",
   "permissions": [
     "storage",
@@ -8,10 +8,9 @@
   ],
   "options_page": "options.html",
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   },
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/16x16.png",
@@ -26,6 +25,8 @@
     "48": "images/48x48.png",
     "128": "images/128x128.png"
   },
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com https://unpkg.com; object-src 'self'"
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
 }

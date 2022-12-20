@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
     });
 
     // https://en.wikipedia.org/wiki/Solarized_(color_scheme)#Colors
-    chrome.browserAction.setBadgeBackgroundColor({color: '#b58900'});
+    chrome.action.setBadgeBackgroundColor({color: '#b58900'});
   }
 });
 
@@ -31,13 +31,13 @@ chrome.tabs.onCreated.addListener(function (tab) {
       chrome.storage.local.set({counter: newCounter});
       if (newCounter === 0) {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-          chrome.browserAction.setBadgeText({text: ''});
+          chrome.action.setBadgeText({text: ''});
           var activeTab = tabs[0];
           chrome.storage.local.set({tabId: activeTab.id});
-          chrome.tabs.create({url: chrome.extension.getURL('main.html')});
+          chrome.tabs.create({url: chrome.runtime.getURL('main.html')});
         });
       } else if (newCounter === result.period-1) {
-        chrome.browserAction.setBadgeText({text: 'next'});
+        chrome.action.setBadgeText({text: 'next'});
       }
   });
 });
