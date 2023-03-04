@@ -12,3 +12,5 @@ Dev install: Clone then follow instructions
 
 icon from <https://freeiconshop.com/icon/lightning-bolt-icon-outline/>
 
+alternatives:
+* <https://github.com/meko-deng/sit-better-extension>
